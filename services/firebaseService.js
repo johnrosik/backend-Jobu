@@ -1,3 +1,4 @@
+import { firebaseConfig } from "../config.js";
 import { initializeApp } from "firebase/app";
 import {
     getAuth,
@@ -11,7 +12,7 @@ import {
     collection,
     getDoc
 } from "firebase/firestore";
-import { firebaseConfig } from "../config.js";
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -19,14 +20,14 @@ const auth = getAuth();
 const db = getFirestore(app);
 
 const firebaseServices = {
-    registrarNovoUsuario: (email, senha, onSuccess, onError) => {
+    registrarNovoUsuario: (email, senha, nome, tipo, onSuccess, onError) => {
         createUserWithEmailAndPassword(auth, email, senha)
             .then(async (userCredential) => {
                 console.log('Usuário registrado com sucesso:', userCredential.user.uid);
                 const user = userCredential.user;
                 const tipoMap = {
                     cliente: !!tipo?.cliente,
-                    freelancer: !!tipo?.cliente,
+                    freelancer: !tipo?.cliente
                 };
                 await setDoc(doc(db, "Users", user.uid), {
                     email: user.email,

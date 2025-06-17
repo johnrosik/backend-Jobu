@@ -1,7 +1,9 @@
 import express from 'express';
+import { JWTSecret, firebaseConfig } from './config.js';
 import cors from 'cors';
 import userRoutes from './routes/users.js';
 import serviceRoutes from './routes/servicos.js';
+
 
 const app = express();
 

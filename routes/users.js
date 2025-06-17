@@ -11,27 +11,23 @@ const secretKey = encoder.encode(JWTSecret);
 router.get('/', async (req, res) => {
     let token = req.get('Authorization');
     if (!token) {
-        res.status(401).json({ error: 'Login não autorizado, token não informado.' });
-        return;
+        return res.status(401).json({ error: 'Token não informado.' });
     }
     token = token.split(' ')[1];
     if (!token) {
-        res.status(401).json({ error: 'Login não autorizado, o token é invalido.' });
-        return;
+        return res.status(401).json({ error: 'Token inválido.' });
     }
 
-    jwtVerify(token, JWTSecret, { algorithms: ['HS256'] })
+    jwtVerify(token, secretKey, { algorithms: ['HS256'] })
         .then(({ payload }) => {
             res.send(payload);
         })
         .catch((error) => {
-            console.log(error);
             if (error.code === 'ERR_JWT_EXPIRED') {
-                res.status(401).json({ error: 'O token expirou. Tente novamente.' });
+                res.status(401).json({ error: 'O token expirou.' });
             } else {
-                res.status(401).json({ error: 'Token invalido. Tente novamente.' });
+                res.status(401).json({ error: 'Token inválido, tente novamente.' });
             }
-            return;
         });
 });
 

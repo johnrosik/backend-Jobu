@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config({ path: './dotenv.env' }); // ou '.env' se for esse o nome
+dotenv.config();
 
 export const JWTSecret = process.env.JWT_SECRET;
 
