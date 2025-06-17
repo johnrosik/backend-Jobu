@@ -1,12 +1,18 @@
 import admin from 'firebase-admin';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const serviceAccount = require('../serviceAccountKey.json');
+
 if (!admin.apps.length) {
-    admin.initializeApp();
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+    });
 }
 
 const db = admin.firestore();
 const servicosCollection = db.collection('Servicos');
 
-module.exports = {
+const servicosService = {
     // Buscar serviço por ID
     async getServicoById(id) {
         const doc = await servicosCollection.doc(id).get();

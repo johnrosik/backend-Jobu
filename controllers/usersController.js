@@ -13,7 +13,8 @@ const usersService = {
 
     // Criar novo usuário
     async createUser(data) {
-        // data deve conter os campos do usuário, ex: nome, email, etc.
+        // data deve ter um json com os dados do usuário
+        // Exemplo: { nome: 'João', email: '
         const docRef = await usersCollection.add(data);
         return { id: docRef.id, ...data };
     },
