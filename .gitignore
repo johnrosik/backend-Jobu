@@ -31,4 +31,4 @@ temp/
 .vscode/
 
 #Conta de Serviço
-.serviceAccountKey.json
+serviceAccountKey.json
